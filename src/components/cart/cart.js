@@ -7,7 +7,8 @@ const cart = (props) => {
     let total = 0;
     for(let i=0; i<cart.length; i++){
         const product = cart[i];
-        total = total + product.price;
+        total = total + product.price * product.quantity;
+        
     }
     
     let shipping = 0;
@@ -20,16 +21,28 @@ const cart = (props) => {
     }
     const tax = (total/10).toFixed(2);
     const grandTotal = (total + shipping + Number(tax)).toFixed(2);
+    const formatNumber = num => {
+        const precision = num.toFixed(2);
+        return Number(precision)
+    }
     return (
-        <div>
-            <h4>Order Summary</h4>
-            <p>Items Ordered: {cart.length}</p>
-            <p>Product Price: {total}</p>
-            <p><small>Tax: {tax}</small></p>
-            <p><small>Shipping Cost: {(total+shipping).toFixed(2)}</small></p>
-            <p>Total Price: {total}</p>
-            <p>Grand Total: {grandTotal}</p>
-        </div>
+        <>
+            <div className="col-md-12 mx-auto">
+            <div className="card bg-light mb-3">
+                <div className="card-header bg-dark text-light text-center">Order Summary</div>
+                <div className="card-body">
+                    <p className="card-text">Items Ordered: {cart.length}</p>
+                    {/* <p className="card-text">Product Price: {formatNumber(total)}</p> */}
+                    <p className="card-text"><small>Tax + VAT: ${tax}</small></p>
+                    <p className="card-text"><small>Shipping Cost: ${(total+shipping).toFixed(2)}</small></p>
+                    <p className="card-text">Total Price: ${formatNumber(total)}</p>
+                    <p className="card-text text-primary text-bold">Grand Total: ${grandTotal}</p>
+                    <br/>
+                    {props.children}
+                </div>
+            </div>
+            </div>
+        </>
     );
 };
 
