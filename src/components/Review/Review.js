@@ -4,13 +4,18 @@ import fakeData from '../../fakeData';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import Cart from '../cart/cart';
 import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 const Review = () => {
     const [cart, setCart]= useState([]);
     const [orderPlaced, setOrderPlace] = useState(false);
-    const handlePlaceholder = () => {
-        setCart([]);
-        setOrderPlace(true);
-        processOrder();
+    const history = useHistory()
+
+    
+    const handleProceedCheckout = () => {
+        // setCart([]);
+        // setOrderPlace(true);
+        // processOrder();
+        history.push('/shipment');
     }
     const handleRemoveProduct = (productKey) => {
         console.log(handleRemoveProduct, productKey);
@@ -51,8 +56,8 @@ const Review = () => {
                 <Cart cart={cart}>
                     {/* <button onClick={handlePlaceholder} className="main-button">Place Order</button> */}
                     <div style={{textDecoration:'none',justifyContent:'center' }} >
-                    <Button onClick={handlePlaceholder} style={{outline:'none'}} variant="contained" color="primary">
-                        Place Order
+                    <Button onClick={handleProceedCheckout} style={{outline:'none'}} variant="contained" color="primary">
+                        Proceed Checkout
                     </Button>
                     </div>
                 </Cart>
