@@ -1,12 +1,27 @@
 import React, { useState, useContext } from 'react';
-
+import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
+import FacebookIcon from '@material-ui/icons/Facebook';
 import { initializeLoginFramework, handleGoogleSignIn, handleSignOut, handleFbSignIn, createUserWithEmailAndPassword, signInWithEmailAndPassword} from './LoginManager';
+import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
+import TextField from '@material-ui/core/TextField';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 
 function Login() {
+
+  const classes = useStyles();
+
   const [newUser, setNewUser] =useState(false);
   const [user, setUser] = useState({
     isSignedIn: false,
@@ -23,6 +38,11 @@ function Login() {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext) 
   const history = useHistory();
   const location = useLocation();
+
+  const [checked, setChecked] = React.useState(true);
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   let { from } = location.state || { from: { pathname: "/" } };
 
@@ -120,25 +140,20 @@ function Login() {
   return (
     <div className="App">
       {
-        user.isSignedIn ? <button onClick={signOut}>Sign Out</button> : <button onClick={googleSignIn}>Sign In</button>
+        <Button style={{margin: '8px',outline: 'none'}} color="secondary"  variant="contained" onClick={googleSignIn}>
+        <PersonPinIcon style={{marginRight:'5px'}}></PersonPinIcon>Sign In With Google
+        </Button>
       }
       <br/>
-      <button onClick={fbSignIn}>Sign Facebook</button>
-      {
-        user.isSignedIn && <div>
-        <p> Welcome, {user.name}</p>
-        
-        <p>Email: {user.email}</p>
-        <img src={user.photo} alt=""/>
-        </div>
-      }
+      {/* <button onClick={fbSignIn}>Sign Facebook</button> */}
+      <Button style={{margin: '8px', outline: 'none'}} onClick={fbSignIn} variant="contained" color="primary">
+        <FacebookIcon style={{marginRight:'5px'}}></FacebookIcon>Sign in with Facebook
+      </Button>
+      <br/>
 
-
-      <h1> Our Own Authentication</h1>
-      
-      <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id=""/>
-      <label htmlFor="newUser">New User Sign Up</label>
-      <form onSubmit={handleSubmit} action="">
+      {/* <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id=""/> */}
+      {/* <label htmlFor="newUser">New User Sign Up</label> */}
+      {/* <form onSubmit={handleSubmit} action="">
         {newUser && <input type="text" name='name' onBlur={handleBlur} placeholder='name' required/>}
         <br/>
         <input type="text" name="email" onBlur={handleBlur} placeholder="write your email address" required/>
@@ -146,11 +161,34 @@ function Login() {
         <input type="password" name="password" onBlur={handleBlur} placeholder="your password" required/>
         <br/>
         <input type="submit" value={newUser ? 'Submit' : 'Sign In'}></input>
-      </form>
-      <p style={{color: 'red'}}>{user.error}</p>
+      </form> */}
+
+      <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
+     { newUser && <TextField id="outlined-basic" name='name' onBlur={handleBlur} placeholder='enter your name' required label="Name" variant="outlined" />}
+     <br/>
+      <TextField id="outlined-basic" label="Email" variant="outlined" name="email" onBlur={handleBlur} placeholder="enter your email" required/>
+      <br/>
+      <TextField type='password' id="outlined-basic" label="Password" variant="outlined" name="password" onBlur={handleBlur} placeholder="enter your password" required />
+      <br/>
+      <Button type="submit" style={{outline: 'none'}} variant="contained" color="primary">
+        {newUser ? 'Submit' : 'Sign In'}
+      </Button>
+    </form>
+
+    <FormControlLabel
+        control={<Checkbox onChange={handleChange}
+        color="primary"
+        inputProps={{ 'aria-label': 'primary checkbox' }}
+        onChange={() => setNewUser(!newUser)} 
+        name="newUser" />}
+        label="New Here? Please, Sign Up"
+      />
+
+
+      {/* <p style={{color: 'red'}}>{user.error}</p>
       {
         user.success && <p style={{color: 'green'}}>User {newUser ? 'created' : 'logged in'} success!</p>
-      }
+      } */}
     </div>
   );
 }

@@ -34,19 +34,17 @@ export const handleGoogleSignIn = () => {
   }
 
 export const handleFbSignIn = () => {
-
-    
     const fbProvider = new firebase.auth.FacebookAuthProvider();
 
-    firebase.auth().signInWithPopup(fbProvider).then(function(result) {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+     return firebase.auth().signInWithPopup(fbProvider)
+     .then(function(result) {
       var token = result.credential.accessToken;
-      // The signed-in user info.
       var user = result.user;
       user.success = true;
       return user;
-      // ...
-    }).catch(function(error) {
+      
+    })
+    .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;

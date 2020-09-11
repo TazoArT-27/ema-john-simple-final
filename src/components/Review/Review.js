@@ -18,7 +18,7 @@ const Review = () => {
         history.push('/shipment');
     }
     const handleRemoveProduct = (productKey) => {
-        console.log(handleRemoveProduct, productKey);
+        //console.log(handleRemoveProduct, productKey);
         const newCart = cart.filter(pd => pd.key !== productKey);
         setCart(newCart);
         removeFromDatabaseCart(productKey);
