@@ -9,19 +9,38 @@ import {Link} from 'react-router-dom';
 import { Button } from '@material-ui/core';
 
 const Shop = () => {
-    const first10 = fakeData.slice(0, 10);
-    const [product, setProduct] = useState(first10);
+    //const first10 = fakeData.slice(0, 10);
+    const [products, setProducts] = useState();
     //const first10 = fakeData.slice(0, 10);
     const[cart, setCart] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/products')
+        .then(res => res.json())
+        .then(data => setProducts(data))
+    }, [])
+
+
     useEffect(() => {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const previousCart = productKeys.map( existingKey => {
-            const product = fakeData.find(pd => pd.key === existingKey);
-            product.quantity = savedCart[existingKey];
-            return product;
-        })
-        setCart(previousCart);
+        //console.log(products, productKeys)
+        // if(products.length > 0){
+        //     const previousCart = productKeys.map( existingKey => {
+        //         const product = products.find(pd => pd.key === existingKey);
+        //         product.quantity = savedCart[existingKey];
+        //         return product;
+        //     })
+        //     setCart(previousCart);
+        // }
+        fetch('http://localhost:5000/productsByKeys', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(productKeys)
+
+          })
+          .then(res => res.json())
+          .then(data => setCart(data))
 
     }, [])
     const handleAddProduct = (product) => {
@@ -48,7 +67,7 @@ const Shop = () => {
             <div className="product-container">
             <ul>
                 {
-                    product.map(element => <Product key={element.key} showAddToCart={true} handleAddProduct={handleAddProduct} product={element}></Product>)
+                    products.map(element => <Product key={element.key} showAddToCart={true} handleAddProduct={handleAddProduct} product={element}></Product>)
                 }
             </ul>
             </div>

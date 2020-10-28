@@ -23,6 +23,8 @@ export const handleGoogleSignIn = () => {
         photo: photoURL,
         success: true
       }
+      setUserToken();
+      //sessionStorage.setItem('token', signedInUser);
       return(signedInUser);
       //console.log(displayName, photoURL, email)
     })
@@ -31,6 +33,14 @@ export const handleGoogleSignIn = () => {
       console.log(error.message);
     
     })
+  }
+
+  const setUserToken = () => {
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+      sessionStorage.setItem('token', idToken);
+    }).catch(function(error) {
+      // Handle error
+    });
   }
 
 export const handleFbSignIn = () => {

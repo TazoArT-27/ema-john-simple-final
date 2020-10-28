@@ -1,4 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Website : [Go To Live Site] (https://tender-newton-e9bc95.netlify.app/)
+
+### Works Done : 
+    1. React Router and Material UI have been used
+    2. At some point bootstrap also been used
+    3. Font Awesome and Stripe.js have been used in this Site
+
+### Main Features : 
+    1. It is an online shopping platform where customers can buy products of their choice.
+    2. There is a separate overview panel to keep track of the items purchased by the customers and the shipment process has also been added through authentication.
+    3. The admin panel of this website will be added soon.
+    4. Payment Method Stripe has been integrated in this site.
+    5. Customer can review the items they choose and if they want they can cancel the order from review page before shipment their order.
+
+### Framework/Libraries :
+    1. React.js
+    2. Firebase Authentication
+    3. Node.js
+    4. MongoDB Database
+    5. React Font Awesome 
+    6. Stripe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -66,4 +109,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# ema-john-simple-final
+# ema-john-simple-final -->
